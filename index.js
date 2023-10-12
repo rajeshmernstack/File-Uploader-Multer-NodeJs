@@ -32,7 +32,6 @@ app.get("/", (req, res) => {
     res.json({success: "true", message: "App is working fine"});
 } )
 app.post("/upload", upload.single("file"), function (req, res, next) {
-  console.log(req.file);
   const baseUrl = `${req.protocol}://${req.hostname}`;
   res.json({ success: true, downloadLink: baseUrl +"/drive/" + req.file.filename });
 });
