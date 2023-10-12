@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 var path = require('path');
+var cors = require('cors')
+
 
 
 let storage = multer.diskStorage({
@@ -20,6 +22,7 @@ const upload = multer({
 });
 
 const app = express();
+app.use(cors())
 app.use("/drive", express.static(path.join(__dirname, 'drive')));
 
 app.use(express.json());
@@ -35,5 +38,5 @@ app.post("/upload", upload.single("file"), function (req, res, next) {
   const baseUrl = `${req.protocol}://${req.hostname}`;
   res.json({ success: true, downloadLink: baseUrl +"/drive/" + req.file.filename });
 });
-
-app.listen(8080);
+const port = process.env.PORT || 8080;
+app.listen(port);
